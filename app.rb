@@ -71,22 +71,17 @@ end
 post '/contacts' do
   @email_adress = params[:email_adress]
   @message = params[:message]
-  if (@email_adress == '' && @message != '' )
-     @err_email = "Вы не указали Email адрес"
-    erb :contacts
-  elsif (@email_adress != '' && @message == '') 
-    @err_message = "Вы не ввели сообщение"
-    erb :contacts
-  else (@email_adress != '' && @message != '')
-    @f = File.open './public/contacts.txt', 'a'
-    @f.puts "\n #{@email_adress} \n  \n  #{@message}"
-    @f.close
-    @f = File.open './public/contacts.txt', 'a'
-    @f.puts "\n --------------------------------------------------"
-    @f.close
-    @output = "Спасибо! Ваше сообщение отправлено."
-    erb :contacts   
-  end
+  
+  hh = { :email_adress => 'Введите email адрес', :message => 'Введите сообщение' }
+
+  @error = hh.select {|key,_| params[key] == ""}.values.join(", ")
+
+  if @error != ''
+    return erb :contacts
+  end 
+
+  erb "Спасибо за ваше обращение к нам!" 
+
 end 
 
 post '/vizit' do
