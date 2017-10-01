@@ -94,27 +94,31 @@ post '/vizit' do
   @phone = params[:phone]
   @date = params[:date]
   @barber = params[:barber]
-  if (@user_name != '' && @phone != '' && @date != '' && @barber != '')
-    @f = File.open './public/user.txt', 'a'
-    @f.puts "\n #{@user_name}; #{@phone}; #{@date}; парикмахер: #{@barber} \n"
-    @f.close
-    @f = File.open './public/user.txt', 'a'
-    @f.puts "\n -------------------------------------------------------------------------------------------------"
-    @f.close
-    @message = "#{@user_name}, спасибо что записались на стрижку! ждем вас #{@date} к парикмахеру #{@barber}!"
-    erb :vizit
-  elsif (@user_name == '' && @phone != '' && @date != '' && @barber != '')
-    @name_error = "Вы не указали имя!"
-    erb :vizit
-  elsif (@user_name != '' && @phone == '' && @date != '' && @barber != '')
-    @phone_error = "Вы не указали ваш телефон!"
-    erb :vizit
-  elsif (@user_name != '' && @phone != '' && @date == '' && @barber != '') 
-    @date_error = "Вы не указали дату посещения!"
-    erb :vizit
-  elsif (@user_name != '' && @phone != '' && @date != '' && @barber == '')
-    @barber_error = "Вы не выбрали парикмахера"
-    erb :vizit
+  
+
+  # валидация заполнения формы
+
+  # хеш 
+  hh = { :user_name => 'Введите имя', :phone => 'Введите телефон', :date => 'Введите дату и время'}
+
+  # для каждой пары ключ значение
+  hh.each do |key, value|
+    
+    # если параметр пуст
+    if params[key] == ''
+
+      # переменно error присвоить value из хеша hh
+      # (а value из хеша hh это сообщение об ошибке)
+      # тоесть переменной error присвоить сообщение об ошибке
+      @error = hh[key]
+
+      # вернуть представление vizit
+      return erb :vizit
+
+      # чтобы сохранить уже введнные значения в полях, в тегах инпут присваиваем value = "<%=@имя переменной %>"
+
+    end  
+
   end  
 end 
 
