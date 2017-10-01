@@ -1,0 +1,10 @@
+<h4>Email tsv1985@bk.ru</h4>
+<p><%= @output %></p>
+<p><%= @err_message %></p>
+<p><%= @err_email %></p>
+<form action="/contacts" method='POST' class="form-inline well">
+<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" size="48" name="email_adress" /></br>
+<p style="margin-top: 10px">Введите сообщение</p>
+<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="50" name="message"></textarea></br>
+<input class="btn btn-primary" type='submit' style="margin-top: 10px" value='Отправить'>
+</form>
