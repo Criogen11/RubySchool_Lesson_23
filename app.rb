@@ -1,10 +1,11 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinatra/reloader'
 
       ###################
       ####BARBERSHOP#####
       ###################
-      
+
 configure do
   enable :sessions
 end
