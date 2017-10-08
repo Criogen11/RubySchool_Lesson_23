@@ -14,11 +14,11 @@
 <p style="margin-top: 15px">Выберите парикмахера</p>
 <select class="form-control" id="exampleFormControlSelect1" name="barber" value="<%= @barber %>" style="margin-top: 5px">
 	<option></option>
-	<option>Victirya Lazareva</option>
-	<option>Мария Тюльнева</option>
-	<option>Яна Копылова</option>
-	<option>Максим Шорохов</option>
-	<option>Дмитрий Капустин</option>
+	<option <%= @barber == 'Victirya Lazareva' ? 'selected' : '' %> >Victirya Lazareva</option>
+	<option<%= @barber == 'Мария Тюльнева' ? 'selected' : '' %> >Мария Тюльнева</option>
+	<option<%= @barber == 'Яна Копылова' ? 'selected' : '' %> >Яна Копылова</option>
+	<option<%= @barber == 'Максим Шорохов' ? 'selected' : '' %> >Максим Шорохов</option>
+	<option<%= @barber == 'Дмитрий Капустин' ? 'selected' : '' %> >Дмитрий Капустин</option>
 </select></br>
 <input class="btn btn-primary" type='submit' style="margin-top: 15px" value='Записаться'>
 </form>

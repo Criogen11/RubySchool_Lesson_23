@@ -9,9 +9,25 @@ require 'sqlite3'
       ####BARBERSHOP#####
       ###################
 
+
+#  Метод для подключения SQLite3 и включения режима вывода из базы данных результатов в виде хеша
+#
+#   def get_db 
+#
+#      db = SQLite3::Database.new 'BarberShop.sqlite'
+#      db.result_as_hash = true   #   включение вывода в виде хеша
+#      return db
+#   end
+
+
 configure do
   enable :sessions
+  #   При инициализации приложения база данных будет создана если ее нет
+  #db = SQLlite3::Database.new 'BarberShop.sqlite'
+  #db.execute "Сдесь пишем код создания таблицы если ее еще не существует"
 end
+
+
 
 get '/contacts' do
   erb :contacts
@@ -21,7 +37,9 @@ get '/vizit' do
   erb :vizit
 end 
 
- 
+ get '/admins' do
+  erb :admins
+end
 
 helpers do
   def username
@@ -49,7 +67,7 @@ end
 post '/login/attempt' do
   @login = params['username']
   @password = params['password']
-  if (@login == 'TsV' && @password == '1985')
+  if (@login == 'admin' && @password == 'admin')
   session[:identity] = params['username'] 
   #where_user_came_from = session[:previous_url] || '/'
   #redirect to where_user_came_from
@@ -107,7 +125,9 @@ post '/vizit' do
   end 
 
   db = SQLite3::Database.new 'BarberShop.sqlite'
-  db.execute "INSERT INTO Users (Name, Phone, DateStamp,Barber) VALUES ('#{@user_name}', '#{@phone}', '#{@date}', '#{@barber}')"
+  db.execute 'INSERT INTO Users (Name, Phone, DateStamp, Barber) 
+              VALUES 
+              (?, ?, ?, ?)', [@user_name, @phone, @date, @barber]
   db.close 
 
 ###  # для каждой пары ключ значение
