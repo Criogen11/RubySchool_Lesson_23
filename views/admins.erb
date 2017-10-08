@@ -1,23 +1,29 @@
 <table class="table">
-	<tr>
 
-		<td>aa</td>
-		<td>bb</td>
+	<thead>
 
-	</tr>
+		<tr>
+			<th>Имя</th>
+			<th>Телефон</th>
+			<th>Дата</th>
+			<th>Парикмахер</th>
+		</tr>
 
-	<tr>
+	</thead>
 
-		<td>aa</td>
-		<td>bb</td>
+	<body>
 
-	</tr>
+		<% @results.each do |row| %>
 
-	<tr>
+			<tr>
+				<td><%= row['Name'] %></td>
+				<td><%= row['Phone'] %></td>
+				<td><%= row['DateStamp'] %></td>
+				<td><%= row['Barber'] %></td>
+			</tr>
 
-		<td>aa</td>
-		<td>bb</td>
+		<% end %>
 
-	</tr>	
+	</body>
 
 </table>

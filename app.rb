@@ -12,18 +12,18 @@ require 'sqlite3'
 
 #  Метод для подключения SQLite3 и включения режима вывода из базы данных результатов в виде хеша
 #
-#   def get_db 
-#
-#      db = SQLite3::Database.new 'BarberShop.sqlite'
-#      db.result_as_hash = true   #   включение вывода в виде хеша
-#      return db
-#   end
+   def get_db 
+
+      db = SQLite3::Database.new 'BarberShop.sqlite'
+      db.results_as_hash = true   #   включение вывода в виде хеша
+      return db
+   end
 
 
 configure do
   enable :sessions
   #   При инициализации приложения база данных будет создана если ее нет
-  #db = SQLlite3::Database.new 'BarberShop.sqlite'
+  db = SQLite3::Database.new 'BarberShop.sqlite'
   #db.execute "Сдесь пишем код создания таблицы если ее еще не существует"
 end
 
@@ -38,6 +38,11 @@ get '/vizit' do
 end 
 
  get '/admins' do
+
+  db = get_db
+
+  @results = db.execute 'SELECT * FROM users ORDER BY id DESC'
+
   erb :admins
 end
 
