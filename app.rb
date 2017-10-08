@@ -1,6 +1,8 @@
+# coding: utf-8
 require 'rubygems'
 require 'sinatra'
 require 'pony'
+require 'sqlite3'
 
 
       ###################
@@ -72,14 +74,15 @@ end
 post '/contacts' do
   @email_adress = params[:email_adress]
   @message = params[:message]
-  
   hh = { :email_adress => 'Введите email адрес', :message => 'Введите сообщение' }
-
   @error = hh.select {|key,_| params[key] == ""}.values.join(", ")
-
   if @error != ''
     return erb :contacts
   end 
+
+  db = SQLite3::Database.new 'BarberShop.sqlite'
+  db.execute "INSERT INTO Contacts (Email, Message) VALUES ('#{@email_adress}', '#{@message}')"
+  db.close
 
   erb "Спасибо за ваше обращение к нам!" 
 
@@ -101,7 +104,11 @@ post '/vizit' do
 
   if @error != ''
     return erb :vizit
-  end  
+  end 
+
+  db = SQLite3::Database.new 'BarberShop.sqlite'
+  db.execute "INSERT INTO Users (Name, Phone, DateStamp,Barber) VALUES ('#{@user_name}', '#{@phone}', '#{@date}', '#{@barber}')"
+  db.close 
 
 ###  # для каждой пары ключ значение
 ###  hh.each do |key, value|
@@ -125,4 +132,24 @@ post '/vizit' do
   erb "#{@user_name} вы записались к парикмахеру #{@barber} на стрижку в #{@date}"
 
 end 
+
+
+#  Обращение к базе данных
+
+#db = SQLite3::Database.new 'Cars.sqlite'
+
+#  Записываем в базу данных
+#db.execute "INSERT INTO Cars (Name, Price) VALUES ('Audi', 12000)"
+
+#  Чтение всей таблицы с выводом на экран
+#db.execute "SELECT * FROM Cars" do |car|
+#
+#  puts car
+#  puts "======="
+#
+#end  
+#
+#db.close
+
+
 
